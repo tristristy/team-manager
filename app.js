@@ -4,6 +4,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const generateHTML = require("./lib/htmlRenderer")
 
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
@@ -193,6 +194,29 @@ const addEmployee = () => {
 
 };
 
+const writeFile = data => {
+    fs.writeFile('./index.html', data, err => {
+        // if there is an error 
+        if (err) {
+            console.log(err);
+            return;
+        // when the profile has been created 
+        } else {
+            console.log("Your team profile has been successfully created! Please check out the index.html")
+        }
+    })
+}; 
+addManager()
+  .then(addEmployee)
+  .then(teamArray => {
+    return render(teamArray);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+ console.log(err);
+  });
 
 
 // Write code to use inquirer to gather information about the development team members,
