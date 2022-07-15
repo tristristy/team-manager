@@ -5,10 +5,95 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+
+const teamArray = [];
+
+const addManager = () => {
+    return inquirer.prompt([
+        {}
+    ])
+}
+const addEmployee = () => {
+    console.log(`
+    --------------------------
+    Add employees to your team
+    --------------------------
+    `);
+
+    return inquirer.prompt ([
+        {
+            type: 'list',
+            name: 'role',
+            message: "Please enter your employee's role",
+            choices: ['Intern', 'Engineer']
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is the name of your employee?',
+            validate: nameInput => {
+                if (!nameInput) {
+                    console.log("PLease enter a name")
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "Please enter the employee's ID number",
+            validate: nameInput => {
+                if(isNaN(nameInput)){
+                    console.log ("Please enter the employee's ID")
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter the employee's email.",
+            validate: email => {
+                valid =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+                } else {
+                    console.log('Please enter an email')
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: "Please enter the manager's office number",
+            validate: nameInput => {
+                if  (isNaN(nameInput)) {
+                    console.log ('Please enter an office number!')
+                    return false; 
+                } else {
+                    return true;
+                }
+            }
+        }
+
+    ])
+    .then(managerInput => {
+        const {name, id, email, officeNumber} = managerInput;
+        const manager = new Manager (name, id, email, officeNumber);
+
+        teamArray.push(manager);
+    })
+}
 
 
 // Write code to use inquirer to gather information about the development team members,
