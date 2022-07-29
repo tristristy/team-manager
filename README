@@ -10,4 +10,5 @@ A text prompt based way of adding members of your team to a html document for yo
 User should clone the application, route to the root folder, and run npm install, then node.js. Answer the prompts that follow, and when completed an Index.html file will be generated in the root folder.
 
 # Visual Walkthrough 
-![Watch this Video](.\assets\walkthrough.mp4)
+![Watch this Video](./assets/walkthrough.mp4)
+
